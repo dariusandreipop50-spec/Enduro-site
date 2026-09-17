@@ -32,3 +32,5 @@ See `REVIEWS_SETUP.md` for the expected feed schema and setup notes.
 - `app/api/reviews/route.ts` — reviews aggregator
 - `app/components/ReviewsSection.tsx` — review UI
 - `app/globals.css` — global and homepage styling
+
+Redeploy after Netlify env update

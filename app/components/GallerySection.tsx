@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLanguage } from "../i18n/LanguageContext";
 
 type GalleryMedia =
@@ -24,14 +24,6 @@ type GalleryGroup = {
 |--------------------------------------------------------------------------
 | GALLERY MEDIA
 |--------------------------------------------------------------------------
-|
-| 6 completely independent slides.
-|
-| Every photo/video belongs to ONE slide only.
-| Nothing is shared or repeated between slides.
-|
-| These paths match the renamed Gallery ZIP.
-|
 */
 
 const galleryGroups: GalleryGroup[] = [
@@ -195,7 +187,12 @@ const galleryCopy = {
     line2: "REMEMBER.",
     description:
       "A glimpse into the trails, mountains, forests and unforgettable moments from our enduro adventures in Romania.",
+    previous: "Show previous gallery item",
     next: "Show next gallery item",
+    close: "Close gallery",
+    archiveTitle: "GALLERY ARCHIVE",
+    archiveNote: "The year archive will be updated as we add the exact photos from each season.",
+    comingSoon: "Photos coming soon",
   },
 
   ro: {
@@ -204,7 +201,12 @@ const galleryCopy = {
     line2: "AMINTEȘTE-ȚI.",
     description:
       "O privire asupra traseelor, munților, pădurilor și momentelor de neuitat din aventurile noastre enduro din România.",
+    previous: "Arată elementul anterior din galerie",
     next: "Arată următorul element din galerie",
+    close: "Închide galeria",
+    archiveTitle: "ARHIVA GALERIEI",
+    archiveNote: "Arhiva pe ani va fi actualizată pe măsură ce adăugăm fotografiile exacte din fiecare sezon.",
+    comingSoon: "Fotografii în curând",
   },
 
   de: {
@@ -213,7 +215,12 @@ const galleryCopy = {
     line2: "ERINNERN.",
     description:
       "Ein Einblick in die Trails, Berge, Wälder und unvergesslichen Momente unserer Enduro-Abenteuer in Rumänien.",
+    previous: "Vorheriges Galerieelement anzeigen",
     next: "Nächstes Galerieelement anzeigen",
+    close: "Galerie schließen",
+    archiveTitle: "GALERIE-ARCHIV",
+    archiveNote: "Das Jahresarchiv wird aktualisiert, sobald wir die genauen Fotos aus jeder Saison hinzufügen.",
+    comingSoon: "Fotos folgen",
   },
 
   es: {
@@ -222,80 +229,237 @@ const galleryCopy = {
     line2: "RECUERDA.",
     description:
       "Una mirada a los senderos, montañas, bosques y momentos inolvidables de nuestras aventuras de enduro en Rumanía.",
+    previous: "Mostrar el elemento anterior de la galería",
     next: "Mostrar el siguiente elemento de la galería",
+    close: "Cerrar galería",
+    archiveTitle: "ARCHIVO DE GALERÍA",
+    archiveNote: "El archivo por años se actualizará a medida que añadamos las fotos exactas de cada temporada.",
+    comingSoon: "Fotos próximamente",
   },
 } as const;
 
 /*
 |--------------------------------------------------------------------------
-| INDIVIDUAL GALLERY TILE
+| GALLERY LIGHTBOX
 |--------------------------------------------------------------------------
 */
 
-type GalleryTileProps = {
+type GalleryLightboxProps = {
   media: GalleryMedia[];
-  className: string;
-  sizes: string;
+  currentIndex: number;
+  yearGroups: {
+    year: string;
+    media: GalleryMedia[];
+    temporary?: boolean;
+  }[];
+  activeYear: string;
+  onYearChange: (year: string) => void;
+  onMediaSelect: (index: number) => void;
+  archiveTitle: string;
+  archiveNote: string;
+  comingSoon: string;
+  onClose: () => void;
+  onPrevious: () => void;
+  onNext: () => void;
+  previousLabel: string;
   nextLabel: string;
+  closeLabel: string;
 };
 
-function GalleryTile({
+function GalleryLightbox({
   media,
-  className,
-  sizes,
+  currentIndex,
+  yearGroups,
+  activeYear,
+  onYearChange,
+  onMediaSelect,
+  archiveTitle,
+  archiveNote,
+  comingSoon,
+  onClose,
+  onPrevious,
+  onNext,
+  previousLabel,
   nextLabel,
-}: GalleryTileProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isChanging, setIsChanging] = useState(false);
-
+  closeLabel,
+}: GalleryLightboxProps) {
   const currentMedia = media[currentIndex];
 
-  const showNextMedia = () => {
-    if (isChanging) return;
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
 
-    setIsChanging(true);
+      if (event.key === "ArrowLeft") {
+        onPrevious();
+      }
 
-    window.setTimeout(() => {
-      setCurrentIndex((current) => {
-        return (current + 1) % media.length;
-      });
+      if (event.key === "ArrowRight") {
+        onNext();
+      }
+    };
 
-      setIsChanging(false);
-    }, 180);
-  };
+    document.addEventListener("keydown", handleKeyDown);
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [onClose, onPrevious, onNext]);
 
   return (
-    <button
-      type="button"
-      className={`gallery-mosaic-item gallery-clickable-item ${className} ${
-        isChanging ? "is-changing" : ""
-      }`}
-      onClick={showNextMedia}
-      aria-label={`${nextLabel}: ${currentMedia.alt}`}
+    <div
+      className="gallery-lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label={currentMedia?.alt || archiveTitle}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) {
+          onClose();
+        }
+      }}
     >
-      <div className="gallery-media-wrapper">
-        {currentMedia.type === "image" ? (
-          <Image
-            key={currentMedia.src}
-            src={currentMedia.src}
-            alt={currentMedia.alt}
-            fill
-            sizes={sizes}
-          />
-        ) : (
-          <video
-            key={currentMedia.src}
-            src={currentMedia.src}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label={currentMedia.alt}
-          />
-        )}
+      <button
+        type="button"
+        className="gallery-lightbox-close"
+        onClick={onClose}
+        aria-label={closeLabel}
+      >
+        ×
+      </button>
+
+      <div className="gallery-lightbox-main">
+        <div className="gallery-lightbox-media-row">
+          <button
+            type="button"
+            className="gallery-lightbox-arrow gallery-lightbox-arrow-left"
+            onClick={onPrevious}
+            aria-label={previousLabel}
+          >
+            ←
+          </button>
+
+          <div className="gallery-lightbox-content">
+            {currentMedia?.type === "image" ? (
+              <Image
+                key={currentMedia.src}
+                src={currentMedia.src}
+                alt={currentMedia.alt}
+                fill
+                sizes="100vw"
+                className="gallery-lightbox-image"
+                priority
+              />
+            ) : currentMedia ? (
+              <video
+                key={currentMedia.src}
+                src={currentMedia.src}
+                className="gallery-lightbox-video"
+                controls
+                autoPlay
+                muted
+                playsInline
+              />
+            ) : null}
+          </div>
+
+          <button
+            type="button"
+            className="gallery-lightbox-arrow gallery-lightbox-arrow-right"
+            onClick={onNext}
+            aria-label={nextLabel}
+          >
+            →
+          </button>
+        </div>
+
+        <div className="gallery-lightbox-counter">
+          {currentIndex + 1} / {media.length}
+        </div>
+
+        <div className="gallery-archive">
+          <div className="gallery-archive-heading">
+            <span>{archiveTitle}</span>
+            <p>{archiveNote}</p>
+          </div>
+
+          <div className="gallery-year-tabs" role="tablist" aria-label={archiveTitle}>
+            {yearGroups.map((group) => (
+              <button
+                key={group.year}
+                type="button"
+                className={`gallery-year-tab ${
+                  activeYear === group.year ? "active" : ""
+                }`}
+                onClick={() => onYearChange(group.year)}
+                role="tab"
+                aria-selected={activeYear === group.year}
+              >
+                {group.year}
+              </button>
+            ))}
+          </div>
+
+          <div className="gallery-year-content">
+            {yearGroups.map((group) =>
+              activeYear === group.year ? (
+                <div key={group.year} className="gallery-year-panel">
+                  {group.media.length > 0 ? (
+                    <div className="gallery-year-thumbnails">
+                      {group.media.map((item, index) => (
+                        <button
+                          key={`${group.year}-${item.src}`}
+                          type="button"
+                          className={`gallery-year-thumbnail ${
+                            media[currentIndex]?.src === item.src ? "active" : ""
+                          }`}
+                          onClick={() => {
+                            const targetIndex = media.findIndex(
+                              (mediaItem) => mediaItem.src === item.src
+                            );
+
+                            if (targetIndex >= 0) {
+                              onMediaSelect(targetIndex);
+                            }
+                          }}
+                          aria-label={item.alt}
+                        >
+                          {item.type === "image" ? (
+                            <Image
+                              src={item.src}
+                              alt=""
+                              fill
+                              sizes="120px"
+                            />
+                          ) : (
+                            <video
+                              src={item.src}
+                              muted
+                              playsInline
+                              preload="metadata"
+                              aria-hidden="true"
+                            />
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="gallery-year-empty">
+                      <strong>{group.year}</strong>
+                      <span>{comingSoon}</span>
+                    </div>
+                  )}
+                </div>
+              ) : null
+            )}
+          </div>
+        </div>
       </div>
-    </button>
+    </div>
   );
 }
 
@@ -310,18 +474,82 @@ export default function GallerySection() {
 
   const copy = galleryCopy[language];
 
-  return (
-    <section
-      className="gallery-section"
-      id="gallery"
-    >
-      <div className="container">
-        {/* HEADING */}
+  const allMedia = galleryGroups.flatMap((group) => group.media);
 
+  /*
+   * TEMPORARY YEAR ARCHIVE
+   *
+   * We do not yet have the exact photos for every year.
+   * For now, the existing gallery media is placed under 2026
+   * so the archive UI is already ready.
+   *
+   * When the real yearly photos are available, only these arrays
+   * need to be changed.
+   */
+  const yearGroups = [
+    {
+      year: "2026",
+      media: allMedia,
+      temporary: true,
+    },
+    {
+      year: "2025",
+      media: [],
+    },
+    {
+      year: "2024",
+      media: [],
+    },
+    {
+      year: "2023",
+      media: [],
+    },
+  ];
+
+  const [activeYear, setActiveYear] = useState("2026");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+
+  const currentMedia = allMedia[currentIndex];
+
+  const showPrevious = () => {
+    setCurrentIndex((current) =>
+      current === 0 ? allMedia.length - 1 : current - 1
+    );
+  };
+
+  const showNext = () => {
+    setCurrentIndex((current) => (current + 1) % allMedia.length);
+  };
+
+  const openLightbox = () => {
+    setIsLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setIsLightboxOpen(false);
+  };
+
+  const handleYearChange = (year: string) => {
+    setActiveYear(year);
+
+    const selectedGroup = yearGroups.find((group) => group.year === year);
+
+    if (selectedGroup?.media.length) {
+      const firstMediaSrc = selectedGroup.media[0].src;
+      const firstMediaIndex = allMedia.findIndex(
+        (media) => media.src === firstMediaSrc
+      );
+
+      setCurrentIndex(firstMediaIndex >= 0 ? firstMediaIndex : 0);
+    }
+  };
+
+  return (
+    <section className="gallery-section">
+      <div className="container">
         <div className="gallery-heading">
-          <div className="eyebrow">
-            {copy.eyebrow}
-          </div>
+          <div className="eyebrow">{copy.eyebrow}</div>
 
           <h2>
             {copy.line1}
@@ -329,29 +557,62 @@ export default function GallerySection() {
             <span>{copy.line2}</span>
           </h2>
 
-          <p>
-            {copy.description}
-          </p>
+          <p>{copy.description}</p>
         </div>
 
-        {/* 6 INDEPENDENT GALLERY SLIDES */}
+        <button
+          type="button"
+          className="gallery-single-item gallery-clickable-item"
+          onClick={openLightbox}
+          aria-label={currentMedia.alt}
+        >
+          <div className="gallery-media-wrapper" id="gallery">
+            {currentMedia.type === "image" ? (
+              <Image
+                key={currentMedia.src}
+                src={currentMedia.src}
+                alt={currentMedia.alt}
+                fill
+                sizes="(max-width: 600px) 100vw, 100vw"
+                priority
+              />
+            ) : (
+              <video
+                key={currentMedia.src}
+                src={currentMedia.src}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-label={currentMedia.alt}
+              />
+            )}
 
-        <div className="gallery-mosaic">
-          {galleryGroups.map((group, index) => (
-            <GalleryTile
-              key={`gallery-slide-${index + 1}`}
-              media={group.media}
-              className={`gallery-item-${index + 1}`}
-              sizes={
-                index === 0
-                  ? "(max-width: 600px) 100vw, (max-width: 900px) 100vw, 60vw"
-                  : "(max-width: 600px) 100vw, (max-width: 900px) 50vw, 35vw"
-              }
-              nextLabel={copy.next}
-            />
-          ))}
-        </div>
+          </div>
+        </button>
       </div>
+
+      {isLightboxOpen && (
+        <GalleryLightbox
+          media={allMedia}
+          currentIndex={currentIndex}
+          yearGroups={yearGroups}
+          activeYear={activeYear}
+          onYearChange={handleYearChange}
+          onMediaSelect={setCurrentIndex}
+          archiveTitle={copy.archiveTitle}
+          archiveNote={copy.archiveNote}
+          comingSoon={copy.comingSoon}
+          onClose={closeLightbox}
+          onPrevious={showPrevious}
+          onNext={showNext}
+          previousLabel={copy.previous}
+          nextLabel={copy.next}
+          closeLabel={copy.close}
+        />
+      )}
     </section>
   );
 }
+

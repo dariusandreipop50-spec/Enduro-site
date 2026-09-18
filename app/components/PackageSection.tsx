@@ -140,7 +140,7 @@ export default function PackageSection({
       >
         <div
           className="container"
-          id="packages"
+          
         >
           <div className="section-heading-row">
             <div>
@@ -159,7 +159,9 @@ export default function PackageSection({
             <p>{t("home.packages.intro")}</p>
           </div>
 
-          <div className="package-grid">
+          <div className="package-grid"
+               id="packages"
+          >
             {packages.map((tourPackage) => {
               const hasDetails =
                 tourPackage.id !== "custom";

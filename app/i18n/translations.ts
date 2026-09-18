@@ -90,8 +90,7 @@ export const translations = {
             name: "CUSTOM LINE",
             unit: "quote",
             meta: "You name it, we’ll do it!",
-            description:
-              "Choose your dates, group size, pace and riding level. We shape the route and logistics around the adventure you want.",
+            description: "",
             badge: "YOUR ADVENTURE",
           },
         },
@@ -390,8 +389,7 @@ export const translations = {
             name: "PACHET PERSONALIZAT",
             unit: "ofertă",
             meta: "Tu alegi, noi facem!",
-            description:
-              "Alege datele, mărimea grupului, ritmul și nivelul. Noi construim traseul și logistica în jurul aventurii pe care o vrei.",
+            description: "",
             badge: "AVENTURA TA",
           },
         },
@@ -690,8 +688,7 @@ export const translations = {
             name: "INDIVIDUELLES PAKET",
             unit: "Angebot",
             meta: "Du bestimmst, wir machen es!",
-            description:
-              "Wähle Termine, Gruppengröße, Tempo und Fahrniveau. Wir gestalten Route und Logistik rund um dein gewünschtes Abenteuer.",
+            description: "",
             badge: "DEIN ABENTEUER",
           },
         },
@@ -990,8 +987,7 @@ export const translations = {
             name: "PAQUETE A MEDIDA",
             unit: "presupuesto",
             meta: "Tú eliges, nosotros lo hacemos!",
-            description:
-              "Elige fechas, tamaño del grupo, ritmo y nivel de conducción. Diseñamos la ruta y la logística alrededor de la aventura que buscas.",
+            description: "",
             badge: "TU AVENTURA",
           },
         },

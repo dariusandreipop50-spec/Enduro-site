@@ -137,6 +137,100 @@ const media2026: GalleryMediaItem[] = [
     src: "/gallery/slide-6/photo-03.jpg",
     alt: "Enduro experience Romania",
   },
+    /* =======================================================
+     NEW PHOTOS 2026
+  ======================================================= */
+
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_20.jpeg",
+    alt: "Adventure Enduro Tours Romania 20",
+  },
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_21.jpeg",
+    alt: "Adventure Enduro Tours Romania 21",
+  },
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_22.jpeg",
+    alt: "Adventure Enduro Tours Romania 22",
+  },
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_23.jpeg",
+    alt: "Adventure Enduro Tours Romania 23",
+  },
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_24.jpeg",
+    alt: "Adventure Enduro Tours Romania 24",
+  },
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_25.jpeg",
+    alt: "Adventure Enduro Tours Romania 25",
+  },
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_26.jpeg",
+    alt: "Adventure Enduro Tours Romania 26",
+  },
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_27.jpeg",
+    alt: "Adventure Enduro Tours Romania 27",
+  },
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_28.jpeg",
+    alt: "Adventure Enduro Tours Romania 28",
+  },
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_29.jpeg",
+    alt: "Adventure Enduro Tours Romania 29",
+  },
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_30.jpeg",
+    alt: "Adventure Enduro Tours Romania 30",
+  },
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_31.jpeg",
+    alt: "Adventure Enduro Tours Romania 31",
+  },
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_32.jpeg",
+    alt: "Adventure Enduro Tours Romania 32",
+  },
+  {
+    type: "image",
+    src: "/gallery/2026/photos/Poza_33.jpeg",
+    alt: "Adventure Enduro Tours Romania 33",
+  },
+
+  /* =======================================================
+     NEW VIDEOS 2026
+  ======================================================= */
+
+  {
+    type: "video",
+    src: "/gallery/2026/videos/Video_1.mp4",
+    alt: "Adventure Enduro Tours Romania video 1",
+  },
+  {
+    type: "video",
+    src: "/gallery/2026/videos/Video_2.mp4",
+    alt: "Adventure Enduro Tours Romania video 2",
+  },
+  {
+    type: "video",
+    src: "/gallery/2026/videos/Video_3.mp4",
+    alt: "Adventure Enduro Tours Romania video 3",
+  },
 ];
 
 const galleryCopy = {

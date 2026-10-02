@@ -2915,4 +2915,851 @@ footer {
   .gallery-lightbox-thumb {
     transition: none;
   }
+}/* =========================================================
+   NAVBAR - GALLERY SUBMENU
+========================================================= */
+
+.nav-gallery-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+}
+
+.nav-gallery-main {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  color: #e3e3df;
+
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.nav-gallery-main:hover,
+.nav-gallery-menu:hover .nav-gallery-main,
+.nav-gallery-menu.open .nav-gallery-main,
+.nav-gallery-menu:focus-within .nav-gallery-main {
+  color: var(--green);
+}
+
+.nav-gallery-arrow {
+  display: inline-block;
+
+  font-size: 0.65rem;
+  line-height: 1;
+
+  transition: transform 0.2s ease;
+}
+
+.nav-gallery-menu:hover .nav-gallery-arrow,
+.nav-gallery-menu.open .nav-gallery-arrow {
+  transform: rotate(180deg);
+}
+
+
+/* =========================================================
+   GALLERY DROPDOWN
+========================================================= */
+
+.nav-gallery-dropdown {
+  position: absolute;
+
+  top: 100%;
+  left: 50%;
+
+  z-index: 200;
+
+  width: 155px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 6px;
+
+  border: 1px solid #292e2b;
+  border-top: 2px solid var(--green);
+
+  background: rgba(7, 8, 8, 0.98);
+
+  box-shadow:
+    0 18px 38px rgba(0, 0, 0, 0.48);
+
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transform: translate(-50%, 8px);
+
+  transition:
+    opacity 0.18s ease,
+    visibility 0.18s ease,
+    transform 0.18s ease;
+}
+
+.nav-gallery-menu:hover .nav-gallery-dropdown,
+.nav-gallery-menu.open .nav-gallery-dropdown,
+.nav-gallery-menu:focus-within .nav-gallery-dropdown {
+  opacity: 1;
+  visibility: visible;
+
+  pointer-events: auto;
+
+  transform: translate(-50%, 0);
+}
+
+.nav-gallery-dropdown a {
+  position: relative;
+
+  display: block;
+
+  width: 100%;
+
+  padding: 12px 14px !important;
+
+  color: #d5d8d4 !important;
+
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.76rem;
+  font-weight: 900;
+
+  letter-spacing: 0.07em;
+
+  text-align: left;
+  text-transform: uppercase;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.nav-gallery-dropdown a::after {
+  display: none !important;
+}
+
+.nav-gallery-dropdown a:hover {
+  background: var(--green);
+
+  color: #061006 !important;
+}
+
+
+/* =========================================================
+   GALLERY SUBMENU - MOBILE / TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .nav-gallery-menu {
+    display: block;
+
+    width: 100%;
+
+    align-self: auto;
+  }
+
+  .nav-gallery-main {
+    width: 100%;
+
+    min-height: 46px;
+
+    justify-content: space-between;
+
+    padding: 0 20px;
+
+    text-align: left;
+  }
+
+  .nav-gallery-dropdown {
+    position: static;
+
+    width: 100%;
+
+    display: none;
+
+    padding:
+      0 10px
+      8px 28px;
+
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+    background: #090b0a;
+
+    box-shadow: none;
+
+    opacity: 1;
+    visibility: visible;
+
+    pointer-events: auto;
+
+    transform: none;
+
+    transition: none;
+  }
+
+  .nav-gallery-menu.open .nav-gallery-dropdown {
+    display: flex;
+  }
+
+  .nav-gallery-dropdown a {
+    padding: 11px 12px !important;
+  }
+}/* =========================================================
+   SEPARATE GALLERY PAGES
+   /gallery/photos
+   /gallery/videos
+========================================================= */
+
+.gallery-page {
+  min-height: 100vh;
+  padding:
+    calc(var(--nav-height) + 72px)
+    0
+    100px;
+
+  background:
+    radial-gradient(
+      circle at 85% 8%,
+      rgba(92, 188, 46, 0.05),
+      transparent 26%
+    ),
+    var(--bg);
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.gallery-page-header {
+  max-width: 760px;
+  margin-bottom: 46px;
+}
+
+.gallery-page-header .eyebrow {
+  margin-bottom: 12px;
+}
+
+.gallery-page-header h1 {
+  margin: 8px 0 22px;
+
+  font-family: "Anton", "Arial Narrow", sans-serif;
+  font-size: clamp(3.8rem, 6vw, 6.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+
+  text-transform: uppercase;
+}
+
+.gallery-page-header h1 span {
+  color: var(--red);
+}
+
+.gallery-page-header p {
+  max-width: 680px;
+
+  margin: 0;
+
+  color: #9fa39f;
+
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   PHOTOS / VIDEOS SWITCHER
+========================================================= */
+
+.gallery-page-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 28px;
+}
+
+.gallery-page-switcher a {
+  min-width: 135px;
+
+  padding: 12px 18px;
+
+  border: 1px solid #343937;
+  border-radius: 2px;
+
+  background: #0d0f0f;
+  color: #aeb2ae;
+
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 900;
+
+  letter-spacing: 0.07em;
+
+  text-align: center;
+  text-transform: uppercase;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.gallery-page-switcher a:hover,
+.gallery-page-switcher a.active {
+  border-color: var(--green);
+
+  background: var(--green);
+  color: #061006;
+}
+
+
+/* =========================================================
+   ARCHIVE HEADER
+========================================================= */
+
+.gallery-page-archive {
+  padding-top: 26px;
+
+  border-top: 1px solid #252a27;
+}
+
+.gallery-page-archive-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  margin-bottom: 25px;
+}
+
+.gallery-page-archive-top > span {
+  color: var(--green);
+
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 900;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   ARCHIVE YEARS
+   ONLY 2026 / 2025
+========================================================= */
+
+.gallery-page-years {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.gallery-page-years button {
+  min-width: 78px;
+
+  padding: 10px 14px;
+
+  border: 1px solid #343937;
+  border-radius: 2px;
+
+  background: #0d0f0f;
+  color: #aeb2ae;
+
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.76rem;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.gallery-page-years button:hover,
+.gallery-page-years button.active {
+  border-color: var(--green);
+
+  background: var(--green);
+  color: #061006;
+}
+
+
+/* =========================================================
+   PHOTO GRID
+========================================================= */
+
+.gallery-page-photo-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.gallery-page-photo {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 4 / 3;
+
+  padding: 0;
+
+  overflow: hidden;
+
+  border: 1px solid #282c2a;
+  border-radius: 2px;
+
+  background: #111313;
+
+  cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.gallery-page-photo img {
+  object-fit: cover;
+
+  transition:
+    transform 0.4s ease,
+    filter 0.4s ease;
+}
+
+.gallery-page-photo::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 55%,
+      rgba(0, 0, 0, 0.38)
+    );
+
+  opacity: 0;
+
+  transition: opacity 0.25s ease;
+}
+
+.gallery-page-photo:hover img {
+  transform: scale(1.045);
+  filter: brightness(0.82);
+}
+
+.gallery-page-photo:hover::after {
+  opacity: 1;
+}
+
+
+/* =========================================================
+   PHOTO ZOOM ICON
+========================================================= */
+
+.gallery-page-zoom {
+  position: absolute;
+
+  right: 16px;
+  bottom: 16px;
+
+  z-index: 2;
+
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+
+  font-size: 26px;
+  font-weight: 300;
+
+  opacity: 0;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.gallery-page-photo:hover .gallery-page-zoom {
+  opacity: 1;
+
+  transform: scale(1.05);
+}
+
+
+/* =========================================================
+   VIDEO GRID
+========================================================= */
+
+.gallery-page-video-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+.gallery-page-video {
+  overflow: hidden;
+
+  border: 1px solid #282c2a;
+  border-radius: 2px;
+
+  background: #0d0f0f;
+}
+
+.gallery-page-video video {
+  display: block;
+
+  width: 100%;
+
+  aspect-ratio: 16 / 9;
+
+  object-fit: cover;
+
+  background: #000;
+}
+
+
+/* =========================================================
+   EMPTY ARCHIVE YEAR
+========================================================= */
+
+.gallery-page-empty {
+  min-height: 190px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  border: 1px solid #292d2b;
+
+  background: #0d0f0f;
+}
+
+.gallery-page-empty strong {
+  color: var(--green);
+
+  font-family: "Anton", sans-serif;
+  font-size: 2.5rem;
+}
+
+.gallery-page-empty span {
+  color: #858a86;
+
+  font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   PHOTO LIGHTBOX / ZOOM MODE
+========================================================= */
+
+.gallery-page-lightbox {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 55px 85px;
+
+  background: rgba(0, 0, 0, 0.96);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.gallery-page-lightbox-image {
+  position: relative;
+
+  width: min(1300px, 88vw);
+
+  height: 82vh;
+}
+
+.gallery-page-lightbox-image img {
+  object-fit: contain;
+}
+
+
+/* =========================================================
+   LIGHTBOX CLOSE
+========================================================= */
+
+.gallery-page-lightbox-close {
+  position: fixed;
+
+  top: 20px;
+  right: 24px;
+
+  z-index: 10;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+
+  font-size: 32px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.gallery-page-lightbox-close:hover {
+  border-color: var(--red);
+
+  background: var(--red);
+}
+
+
+/* =========================================================
+   LIGHTBOX ARROWS
+========================================================= */
+
+.gallery-page-lightbox-arrow {
+  position: fixed;
+
+  top: 50%;
+
+  z-index: 10;
+
+  width: 56px;
+  height: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+
+  font-size: 28px;
+
+  cursor: pointer;
+
+  transform: translateY(-50%);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.gallery-page-lightbox-arrow:hover {
+  border-color: rgba(255, 255, 255, 0.85);
+
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.gallery-page-lightbox-left {
+  left: 25px;
+}
+
+.gallery-page-lightbox-right {
+  right: 25px;
+}
+
+
+/* =========================================================
+   LIGHTBOX COUNTER
+========================================================= */
+
+.gallery-page-lightbox-count {
+  position: fixed;
+
+  bottom: 20px;
+  left: 50%;
+
+  padding: 7px 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+
+  transform: translateX(-50%);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+  .gallery-page-photo-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .gallery-page-video-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+  .gallery-page {
+    padding:
+      calc(var(--nav-height) + 45px)
+      0
+      70px;
+  }
+
+  .gallery-page-header {
+    margin-bottom: 32px;
+  }
+
+  .gallery-page-header h1 {
+    font-size:
+      clamp(3rem, 14vw, 4.5rem);
+  }
+
+  .gallery-page-switcher {
+    width: 100%;
+  }
+
+  .gallery-page-switcher a {
+    flex: 1;
+
+    min-width: 0;
+  }
+
+  .gallery-page-archive-top {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .gallery-page-photo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-page-zoom {
+    right: 12px;
+    bottom: 12px;
+
+    opacity: 1;
+  }
+
+  .gallery-page-lightbox {
+    padding:
+      65px 12px
+      25px;
+  }
+
+  .gallery-page-lightbox-image {
+    width: 100%;
+    height: 70vh;
+  }
+
+  .gallery-page-lightbox-close {
+    top: 12px;
+    right: 12px;
+
+    width: 44px;
+    height: 44px;
+
+    font-size: 28px;
+  }
+
+  .gallery-page-lightbox-arrow {
+    width: 44px;
+    height: 44px;
+
+    font-size: 22px;
+  }
+
+  .gallery-page-lightbox-left {
+    left: 8px;
+  }
+
+  .gallery-page-lightbox-right {
+    right: 8px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-page-photo img,
+  .gallery-page-photo::after,
+  .gallery-page-zoom,
+  .gallery-page-switcher a,
+  .gallery-page-years button {
+    transition: none;
+  }
 }
